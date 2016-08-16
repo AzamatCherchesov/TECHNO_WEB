@@ -1,0 +1,10 @@
+
+{% load static %}
+
+<form class="modal-content" action="{% url "questions:post_comment" pk=pk.pk%}" method ="post" ENCTYPE="multipart/form-data">
+      {% csrf_token %}
+        {{ form }}
+
+
+    <input class="btn btn-lg btn-success" type="submit">
+</form>

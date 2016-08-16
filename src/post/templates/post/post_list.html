@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}<h2 xmlns:posts="http://www.w3.org/1999/xhtml">list of posts</h2>{% endblock %}
+
+{% block content %}
+
+
+
+<div class="jumbotron" >
+    <h1>Find anything</h1>
+    <form action="">
+
+        {{form.search.label_tag}}
+        {{ form.search }}
+        {{form.sort_field.label_tag}}
+        {{form.sort_field}}
+        {{ form.sort_field.errors}}
+        <input type="submit">
+    </form>
+
+</div>
+{% endblock %}
+
+
+    {% block container %}
+
+    <div class="col-lg-6">
+        <ul>
+
+            {% for post in object_list %}
+            {% if post.published or user == post.author%}
+            <li>
+                <h4>
+                    {{post.author}}
+                    ({{ post.answers_count}})<br>
+                    <div>  Post title: </div>
+                    <a href="{% url 'questions:detail' pk=post.pk  %}"> {{ post.title }}</a><br>
+                    <div> Blog: </div>
+                    {% for blog in post.blog.all %}
+                        <a href="{% url 'blogs:blog' pk=blog.pk  %}"> {{ blog.title }} </a>
+                    {% endfor %}
+                    <div>{{ post.pub_date }}</div>
+                </h4>
+                <p>
+
+                     <ul class="nav nav-pills pull-right">
+                        <li class="active">
+                        {% if user == post.author%}
+                            <a href="{% url 'questions:update' pk=post.pk%}">Edit</a>
+                        {% endif %}
+                        </li>
+                     </ul>
+
+                <div>{{ post.text }}</div>
+                </p>
+            </li>
+            {%endif %}
+            {% endfor %}
+        </ul>
+    </div>
+     {% endblock %}

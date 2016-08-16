@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %} <h3>blog</h3> {% endblock %}
+{% block content %}
+<div class="jumbotron">
+    <h4><div>
+            <div>{{object.author}}</div>
+            <div>{{ object.title }}</div>
+            <div>{{ object.text }}</div><br>
+        </div>
+    </h4>
+
+</div>
+{% endblock %}
+ {% block container %}
+        <p class="lead">POSTS:</p>
+        <div class="col-lg-6">
+            <ul>
+                {% for post in object.posts.all %}
+                <li>
+                    <h4>
+                       <div>{{ post.pub_date }}</div>
+                        <a href="{% url 'questions:detail' pk=post.pk  %}"> {{ post.title }} </a>
+                        <div>Number of comments:  {{ forloop.counter }}</div>
+
+                    </h4>
+                    <p><div>{{ post.text }}</div></p>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+{% endblock %}
+
+

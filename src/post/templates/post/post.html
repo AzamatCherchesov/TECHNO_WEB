@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+{% block head %}
+
+    <script src="//cdn.jsdelivr.net/sockjs/1.0/sockjs.min.js" type="text/javascript"></script>
+    <script src="{% static 'centrifuge.js' %}"></script>
+    <script src="{% static 'comments.js' %}"></script>
+
+{% endblock %}
+{% block title %} post {% endblock %}
+{% if object.published or user == object.author%}
+{% block content %}
+
+<script type="text/javascript" src="{% static 'cookie.js' %}"></script>
+<script type="text/javascript" src="{% static 'like/rate.js' %}"></script>
+<div class="jumbotron">
+    <h4>
+        <div>
+            <p id="td-exploit-rating"><strong>Рейтинг: </strong>{% include 'like/likeform.html' %}</p>
+            <div>{{ object.title }}</div>
+            <div>{{ object.text }}</div>
+            <div>{{object.author}}</div>
+
+        </div>
+    </h4>
+    <br>
+    <p class="lead">COMMENTS:</p>
+</div>
+
+{% endblock %}
+{% block container %}
+    <div id="answers-cent-data"
+        data-cent-url="{{ CENTRIFUGE_SOCKJS_ENDPOINT }}"
+        data-cent-user="{{ CENTRIFUGE_USER }}"
+        data-cent-ts="{{ CENTRIFUGE_TIMESTAMP }}"
+        data-cent-info="{{ CENTRIFUGE_INFO }}"
+        data-cent-token="{{ CENTRIFUGE_TOKEN }}"
+        data-cent-channel="{{ object.get_cent_answers_channel_name }}"
+        >
+      </div>
+
+<div class="col-sm-8 blog-main">
+
+    <div class="col-lg-6">
+        <ul>
+            <div id="comments" data-url="{% url "questions:post_comments" pk=object.pk %}">
+            {% include "post/post_comments_ajax.html" with post=object%}
+            </div>
+        </ul>
+</div>
+
+</div>
+
+<div id="new_comment_outer" class="modal fade" >
+    <div id="new_comment_inner" class="modal-dialog" data-form-url="{%url "questions:post_comment" pk=object.pk%}" >
+
+    </div>
+</div>
+<script src="{% static "comment.js" %}" ></script>
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#new_comment_outer"  >CREATE COMMENT</button>
+
+{% endblock %}
+{% endif %}
+

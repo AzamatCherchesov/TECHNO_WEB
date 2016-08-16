@@ -1,0 +1,13 @@
+{% for comment in post.comments.all %}
+
+<li>
+    <h4>
+        <div>{{comment.author}}</div>
+        <div>{{ comment.pub_date }}</div>
+        <strong>Рейтинг: </strong>{% include 'like/likeform.html' with object=comment %}
+    </h4>
+    <p>
+    <div>{{ comment.text }}</div>
+    </p>
+</li>
+{% endfor %}

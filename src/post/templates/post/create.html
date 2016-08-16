@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% load widget_tweaks %}
+
+{% block title %}
+    {% if object.id %}
+            Редактирование вопроса <br><br>
+            {{ object.title }}
+    {% else %}
+            Создание вопроса <br><br>
+    {% endif %}
+{% endblock %}
+
+{% block container %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div>
+
+        {{ form.title.label_tag }}
+        {{ form.title|add_class:"form-control" }}
+        {{ form.text.label_tag }}
+        {{ form.text|add_class:"form-control" }}
+        {{ form.blog.label_tag }}
+            {{form.blog|add_class:"form-control chosen-select" }}
+
+        {{ form.f }}
+        </div>
+        {{ form.categories|add_class:"form-control chosen-select" }}
+        <input type="submit">
+
+
+      
+
+    </form>
+    <script>
+        $('.chosen-select').chosen();
+    </script>
+{% endblock %}
+
