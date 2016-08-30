@@ -157,4 +157,3 @@ EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 EMAIL_HOST_USER = 'a1tt@rambler.ru'
 
-EMAIL_HOST_PASSWORD = 'azamat'
